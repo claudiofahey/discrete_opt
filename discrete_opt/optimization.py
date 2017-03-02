@@ -24,10 +24,18 @@ def scalar_discrete_gap_filling_minimizer(
     It will then either adjust the bracket or add to the list of best x values.
     The method terminates when the largest gap is less than or equal to tol.
 
-    Args:
-        bracket (tuple): A tuple of the bounds of the function (x_min, x_max).
-            Optionally, a middle point can be specified and it will be the initial best point.
-        tol (float): The method terminates when the largest gap is less than or equal to this value.
+    Parameters
+    ----------
+    bracket (tuple)
+        A tuple of the bounds of the function (x_min, x_max).
+        Optionally, a 3-tuple can be specified and the middle point will be the initial best point.
+    tol (float)
+        The method terminates when the largest gap is less than or equal to this value.
+
+    Returns
+    -------
+    OptimizeResult
+        The result of the minimization.
 
     """
     # bestx is a list.
@@ -210,14 +218,25 @@ def multivariate_discrete_gap_filling_minimizer(
     This multivariate method uses `scalar_gap_filling_minimizer` repeatedly along each dimension
     for a fixed number of iterations. There is currently no other stopping criteria.
 
-    Args:
-        fun: Function of a single variable of a list-type.
-        x0 (np.ndarray): Initial guess.
-        bounds: List-type of (min, max) pairs for each element in x, defining the bounds in that dimension.
-        tol: See `scalar_discrete_gap_filling_minimizer`.
-        axes (np.ndarray): Number of columns must equal length of x0.
-            The rows will determine the set of axes that this function will optimize along.
-            Leave as None to use unit axes along each dimension.
+    Parameters
+    ----------
+    fun: Function of a single variable of a list-type.
+    x0 (np.ndarray)
+        Initial guess.
+    bounds
+        List-type of (min, max) pairs for each element in x, defining the bounds in that dimension.
+    tol
+        See `scalar_discrete_gap_filling_minimizer`.
+    axes (np.ndarray)
+        Number of columns must equal length of x0.
+        The rows will determine the set of axes that this function will optimize along.
+        Leave as None to use unit axes along each dimension.
+
+    Returns
+    -------
+    OptimizeResult
+        The result of the minimization.
+
     """
 
     ndims = len(x0)
@@ -294,11 +313,22 @@ def simple_global_minimizer_spark(
         fun, x0, bounds, sc=None, verbose=True, **options):
     """Exhaustive global minimizer with same calling convention as `multivariate_discrete_gap_filling_minimizer`.
 
-    Args:
-        fun: Function of a single variable of a list-type.
-        x0: Unused but kept for compatibility.
-        bounds: List-type of (min, max) pairs for each element in x, defining the bounds in that dimension.
-        sc (SparkContext)
+    Parameters
+    ----------
+    fun
+        Function of a single variable of a list-type.
+    x0
+        Unused but kept for compatibility.
+    bounds
+        List-type of (min, max) pairs for each element in x, defining the bounds in that dimension.
+    sc (SparkContext)
+        The SparkContext.
+
+    Returns
+    -------
+    OptimizeResult
+        The result of the minimization.
+
     """
     axis_domains = [range(a, b+1) for a, b in bounds]
     domain_size = np.product([len(d) for d in axis_domains])

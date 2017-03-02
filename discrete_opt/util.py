@@ -29,6 +29,8 @@ class CachedFunction(object):
         self.cached_fev = 0     # number of cached function calls (cache hits)
 
     def __call__(self, *args, **kwargs):
+        """If previously called with the same set of args and kwargs, return the cached result.
+        Otherwise, call the underlying function and cache the result."""
         cache_key = make_hashable((args, kwargs))
         try:
             y = self.cached_points[cache_key]
