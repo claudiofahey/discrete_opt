@@ -26,10 +26,10 @@ def scalar_discrete_gap_filling_minimizer(
 
     Parameters
     ----------
-    bracket (tuple)
+    bracket : array_like
         A tuple of the bounds of the function (x_min, x_max).
         Optionally, a 3-tuple can be specified and the middle point will be the initial best point.
-    tol (float)
+    tol : float
         The method terminates when the largest gap is less than or equal to this value.
 
     Returns
@@ -221,13 +221,13 @@ def multivariate_discrete_gap_filling_minimizer(
     Parameters
     ----------
     fun: Function of a single variable of a list-type.
-    x0 (np.ndarray)
+    x0 : array_like
         Initial guess.
     bounds
         List-type of (min, max) pairs for each element in x, defining the bounds in that dimension.
     tol
         See `scalar_discrete_gap_filling_minimizer`.
-    axes (np.ndarray)
+    axes : array_like
         Number of columns must equal length of x0.
         The rows will determine the set of axes that this function will optimize along.
         Leave as None to use unit axes along each dimension.
